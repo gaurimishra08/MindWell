@@ -1,20 +1,11 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import { Provider as PaperProvider } from 'react-native-paper';
 import AppNavigator from './Navigations/appnavigator';
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <PaperProvider>
       <AppNavigator /> 
-      <StatusBar style="auto" />
-    </View>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
