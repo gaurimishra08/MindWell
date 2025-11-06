@@ -5,6 +5,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Welcome to the Home Screen!</Text>
+      <Text style={styles.text}>Explore your journey here.</Text>   
     </View>
   );
 }
