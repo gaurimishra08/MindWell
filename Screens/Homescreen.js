@@ -1,82 +1,333 @@
-import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import { Card, Title, Paragraph, Button } from "react-native-paper";
+// import React, { useEffect, useState } from "react";
+// import { View, Text, StyleSheet, ScrollView } from "react-native";
+// import { Card, Button } from "react-native-paper";
 
-export default function HomeScreen() {
+// export default function HomeScreen({ navigation }) {
+//   const [showWelcome, setShowWelcome] = useState(true);
+
+//   useEffect(() => {
+//     const timer = setTimeout(() => setShowWelcome(false), 3000);
+//     return () => clearTimeout(timer);
+//   }, []);
+
+//   // -------------------- WELCOME SCREEN --------------------
+//   if (showWelcome) {
+//     return (
+//       <View style={styles.welcomeContainer}>
+//         <Text style={styles.welcomeTitle}>MindWell ✨</Text>
+//         <Text style={styles.welcomeSubtitle}>
+//           Breathe. Relax. Find your calm.
+//         </Text>
+//       </View>
+//     );
+//   }
+
+//   // -------------------- MAIN UI --------------------
+//   return (
+//     <ScrollView contentContainerStyle={styles.container}>
+//       {/* Header */}
+//       <Card style={styles.headerCard}>
+//         <Card.Content>
+//           <Text style={styles.mainTitle}>Welcome Back 🌿</Text>
+//           <Text style={styles.mainSubtitle}>
+//             Choose your mindfulness activity today.
+//           </Text>
+//         </Card.Content>
+//       </Card>
+
+//       {/* Journal */}
+//       <Card style={styles.featureCard}>
+//         <Card.Title title="Daily Journal ✏️" titleStyle={styles.cardTitle} />
+//         <Card.Content>
+//           <Text style={styles.descText}>
+//             Reflect and write your thoughts with clarity.
+//           </Text>
+//         </Card.Content>
+//         <Card.Actions>
+//           <Button
+//             mode="contained"
+//             buttonColor="#7A8E54"
+//             textColor="white"
+//             onPress={() => navigation.navigate("Journal")}
+//           >
+//             Open Journal
+//           </Button>
+//         </Card.Actions>
+//       </Card>
+
+//       {/* Meditation */}
+//       <Card style={styles.featureCard}>
+//         <Card.Title title="Meditation 🧘‍♀️" titleStyle={styles.cardTitle} />
+//         <Card.Content>
+//           <Text style={styles.descText}>
+//             Find peace through guided meditation.
+//           </Text>
+//         </Card.Content>
+//         <Card.Actions>
+//           <Button
+//             mode="contained"
+//             buttonColor="#7A8E54"
+//             textColor="white"
+//             onPress={() => navigation.navigate("Meditation")}
+//           >
+//             Start Session
+//           </Button>
+//         </Card.Actions>
+//       </Card>
+
+//       {/* Resources */}
+//       <Card style={styles.featureCard}>
+//         <Card.Title title="Wellness Resources 📚" titleStyle={styles.cardTitle} />
+//         <Card.Content>
+//           <Text style={styles.descText}>
+//             Learn techniques to improve your emotional well-being.
+//           </Text>
+//         </Card.Content>
+//         <Card.Actions>
+//           <Button
+//             mode="contained"
+//             buttonColor="#7A8E54"
+//             textColor="white"
+//             onPress={() => navigation.navigate("Resources")}
+//           >
+//             Explore
+//           </Button>
+//         </Card.Actions>
+//       </Card>
+//     </ScrollView>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   // 🌿 Welcome Screen
+//   welcomeContainer: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     backgroundColor: "#FAF8F1",
+//   },
+//   welcomeTitle: {
+//     fontSize: 32,
+//     fontWeight: "bold",
+//     color: "#556B2F",
+//   },
+//   welcomeSubtitle: {
+//     marginTop: 8,
+//     fontSize: 16,
+//     color: "#7A8E54",
+//   },
+
+//   // 🌿 Main Container
+//   container: {
+//     padding: 20,
+//     backgroundColor: "#FAF8F1",
+//   },
+
+//   // 🌿 Header Card
+//   headerCard: {
+//     backgroundColor: "#E8E2D0",
+//     paddingVertical: 18,
+//     marginBottom: 20,
+//     borderRadius: 12,
+//   },
+//   mainTitle: {
+//     fontSize: 26,
+//     fontWeight: "600",
+//     color: "#5B4E3B",
+//   },
+//   mainSubtitle: {
+//     fontSize: 14,
+//     color: "#7A8E54",
+//     marginTop: 4,
+//   },
+
+//   // 🌿 Feature Cards
+//   featureCard: {
+//     backgroundColor: "#F5F5DC",
+//     padding: 12,
+//     borderRadius: 12,
+//     marginBottom: 15,
+//     elevation: 2,
+//   },
+//   cardTitle: {
+//     color: "#556B2F",
+//     fontWeight: "bold",
+//     fontSize: 18,
+//   },
+//   descText: {
+//     color: "#5B4E3B",
+//     marginBottom: 10,
+//     fontSize: 14,
+//   },
+// });
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+
+export default function HomeScreen({ navigation }) {
+  const [showWelcome, setShowWelcome] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowWelcome(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // HEADSPACE STYLE SPLASH
+  if (showWelcome) {
+    return (
+      <View style={styles.splash}>
+        <Text style={styles.splashTitle}>Welcome to MindWell 🌤️</Text>
+        <Text style={styles.splashSub}>Find your calm today.</Text>
+      </View>
+    );
+  }
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {/* Welcome Card */}
-      <Card style={styles.welcomeCard}>
-        <Card.Content>
-          <Title style={styles.title}>Welcome to MindWell!</Title>
-          <Paragraph style={styles.subtitle}>
-            Explore your journey towards mindfulness and mental wellness.
-          </Paragraph>
-        </Card.Content>
-      </Card>
+    <ScrollView style={styles.container}>
+      {/* HEADER */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Good to see you 🌿</Text>
+        <Text style={styles.headerSub}>What would you like to explore?</Text>
+      </View>
 
-      {/* Journal Card */}
-      <Card style={styles.card}>
-        <Card.Content>
-          <Title>Daily Journal</Title>
-          <Paragraph>Reflect on your thoughts and track your progress.</Paragraph>
-        </Card.Content>
-        <Card.Actions>
-          <Button mode="contained" onPress={() => console.log("Go to Journal")}>
-            Go to Journal
-          </Button>
-        </Card.Actions>
-      </Card>
+      {/* BIG BUBBLE BUTTONS (HEADSPACE STYLE) */}
+      <TouchableOpacity
+        style={[styles.bigBubble, { backgroundColor: "#FFD8B0" }]}
+        onPress={() => navigation.navigate("Meditation")}
+      >
+        <Text style={styles.bubbleEmoji}>🧘‍♀️</Text>
+        <Text style={styles.bubbleTitle}>Meditation</Text>
+        <Text style={styles.bubbleSub}>Guided sessions to relax</Text>
+      </TouchableOpacity>
 
-      {/* Meditation Card */}
-      <Card style={styles.card}>
-        <Card.Content>
-          <Title>Meditation</Title>
-          <Paragraph>Start a calming meditation session to relax.</Paragraph>
-        </Card.Content>
-        <Card.Actions>
-          <Button mode="contained" onPress={() => console.log("Start Meditation")}>
-            Start Meditation
-          </Button>
-        </Card.Actions>
-      </Card>
+      <TouchableOpacity
+        style={[styles.bigBubble, { backgroundColor: "#FFEFCB" }]}
+        onPress={() => navigation.navigate("Journal")}
+      >
+        <Text style={styles.bubbleEmoji}>📖</Text>
+        <Text style={styles.bubbleTitle}>Journal</Text>
+        <Text style={styles.bubbleSub}>Reflect and write your thoughts</Text>
+      </TouchableOpacity>
 
-      {/* Resources Card */}
-      <Card style={styles.card}>
-        <Card.Content>
-          <Title>Resources</Title>
-          <Paragraph>Read helpful tips and articles to improve your wellness.</Paragraph>
-        </Card.Content>
-        <Card.Actions>
-          <Button mode="contained" onPress={() => console.log("View Resources")}>
-            View Resources
-          </Button>
-        </Card.Actions>
-      </Card>
+      <TouchableOpacity
+        style={[styles.bigBubble, { backgroundColor: "#E3F5CE" }]}
+        onPress={() => navigation.navigate("Resources")}
+      >
+        <Text style={styles.bubbleEmoji}>🌼</Text>
+        <Text style={styles.bubbleTitle}>Wellness Tips</Text>
+        <Text style={styles.bubbleSub}>Read calming content</Text>
+      </TouchableOpacity>
+
+      {/* SMALL SECTION LIKE HEADSPACE */}
+      <Text style={styles.sectionTitle}>Recommended for you ✨</Text>
+
+      <View style={styles.recoCard}>
+        <Text style={styles.recoTitle}>5-min Relaxation</Text>
+        <Text style={styles.recoSub}>A quick session to refresh your mind</Text>
+      </View>
+
+      <View style={styles.recoCard}>
+        <Text style={styles.recoTitle}>Evening Reflection</Text>
+        <Text style={styles.recoSub}>End your day with gratitude</Text>
+      </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    backgroundColor: "#F0F4F7",
+  // SPLASH
+  splash: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FFF7EA",
   },
-  welcomeCard: {
-    marginBottom: 20,
-    padding: 10,
-    backgroundColor: "#E0F7FA",
-  },
-  title: {
-    fontSize: 24,
+  splashTitle: {
+    fontSize: 32,
     fontWeight: "bold",
-    marginBottom: 5,
+    color: "#FF9F50",
   },
-  subtitle: {
+  splashSub: {
     fontSize: 16,
-    color: "#555",
+    color: "#AD7740",
+    marginTop: 10,
   },
-  card: {
+
+  container: {
+    backgroundColor: "#FFFDF8",
+    paddingHorizontal: 20,
+  },
+
+  // HEADER
+  header: {
+    paddingVertical: 20,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#556B2F",
+  },
+  headerSub: {
+    fontSize: 15,
+    color: "#7A8E54",
+    marginTop: 5,
+  },
+
+  // BIG HEADSPACE BUBBLE BUTTONS
+  bigBubble: {
+    borderRadius: 30,
+    padding: 25,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 4,
+  },
+  bubbleEmoji: {
+    fontSize: 40,
+    marginBottom: 10,
+  },
+  bubbleTitle: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#4A4A4A",
+  },
+  bubbleSub: {
+    fontSize: 14,
+    color: "#6D6D6D",
+    marginTop: 4,
+  },
+
+  // SECTION TITLE
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#556B2F",
+    marginTop: 20,
+    marginBottom: 12,
+  },
+
+  recoCard: {
+    backgroundColor: "#FFF2D7",
+    padding: 18,
+    borderRadius: 20,
     marginBottom: 15,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+  },
+  recoTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#D47A2A",
+  },
+  recoSub: {
+    fontSize: 14,
+    color: "#7A6B58",
   },
 });
