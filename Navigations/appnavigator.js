@@ -1,53 +1,42 @@
-import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import * as React from "react";
+import { BottomNavigation } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet } from "react-native";
+
 import HomeScreen from "../Screens/Homescreen";
 import JournalScreen from "../Screens/JournalScreen";
 import MeditationScreen from "../Screens/MeditationScreen";
 import ResourcesScreen from "../Screens/ResourcesScreen";
 import SettingsScreen from "../Screens/SettingsScreen";
 
-const Tab = createBottomTabNavigator();
-
 export default function AppNavigator() {
+  const [index, setIndex] = React.useState(0);
+
+  const routes = [
+    { key: "home", title: "Home", icon: "home" },
+    { key: "journal", title: "Journal", icon: "book" },
+    { key: "meditation", title: "Meditation", icon: "leaf" },
+    { key: "resources", title: "Resources", icon: "format-list-bulleted" },
+    { key: "settings", title: "Settings", icon: "cog" },
+  ];
+
+  const renderScene = BottomNavigation.SceneMap({
+    home: HomeScreen,
+    journal: JournalScreen,
+    meditation: MeditationScreen,
+    resources: ResourcesScreen,
+    settings: SettingsScreen,
+  });
+
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          headerShown: false, // hides top header
-          tabBarIcon: ({ size, color }) => {
-            let iconName;
-
-            if (route.name === "Home") iconName = "home";
-            else if (route.name === "Journal") iconName = "book";
-            else if (route.name === "Meditation") iconName = "leaf";
-            else if (route.name === "Resources") iconName = "list";
-            else if (route.name === "Settings") iconName = "settings";
-
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: "green",
-          tabBarInactiveTintColor: "gray",
-        })}
-      >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Journal" component={JournalScreen} />
-        <Tab.Screen name="Meditation" component={MeditationScreen} />
-        <Tab.Screen name="Resources" component={ResourcesScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
+      <BottomNavigation
+        navigationState={{ index, routes }}
+        onIndexChange={setIndex}
+        renderScene={renderScene}
+        activeColor="green"
+        inactiveColor="gray"
+        barStyle={{ backgroundColor: "white" }}
+      />
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-

@@ -1,191 +1,21 @@
-// import React, { useRef, useState } from "react";
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   Animated,
-//   TouchableOpacity,
-// } from "react-native";
-// import { Button } from "react-native-paper";
-
-// export default function MeditationScreen() {
-//   const bubbleAnim = useRef(new Animated.Value(1)).current;
-//   const [isPlaying, setIsPlaying] = useState(false);
-//   const [timer, setTimer] = useState(0);
-//   const intervalRef = useRef(null);
-
-//   const startBreathing = () => {
-//     setIsPlaying(true);
-
-//     Animated.loop(
-//       Animated.sequence([
-//         Animated.timing(bubbleAnim, {
-//           toValue: 1.15,
-//           duration: 3000,
-//           useNativeDriver: true,
-//         }),
-//         Animated.timing(bubbleAnim, {
-//           toValue: 0.95,
-//           duration: 3000,
-//           useNativeDriver: true,
-//         }),
-//       ])
-//     ).start();
-
-//     intervalRef.current = setInterval(() => {
-//       setTimer((t) => t + 1);
-//     }, 1000);
-//   };
-
-//   const stopBreathing = () => {
-//     setIsPlaying(false);
-//     bubbleAnim.stopAnimation();
-//     clearInterval(intervalRef.current);
-//   };
-
-//   const toggleMeditation = () => {
-//     if (isPlaying) stopBreathing();
-//     else startBreathing();
-//   };
-
-//   const formatTime = (sec) =>
-//     `${Math.floor(sec / 60)}:${("0" + (sec % 60)).slice(-2)}`;
-
-//   return (
-//     <View style={styles.container}>
-//       {/* HEADER */}
-//       <Text style={styles.title}>Meditation 🧘‍♂️</Text>
-//       <Text style={styles.subtitle}>Relax. Breathe. Be present.</Text>
-
-//       {/* BREATHING BUBBLE */}
-//       <Animated.View
-//         style={[
-//           styles.breathBubble,
-//           {
-//             transform: [{ scale: bubbleAnim }],
-//           },
-//         ]}
-//       >
-//         <Text style={styles.bubbleText}>
-//           {isPlaying ? "Breathe..." : "Tap to Begin"}
-//         </Text>
-//       </Animated.View>
-
-//       {/* PLAY / PAUSE BUTTON */}
-//       <TouchableOpacity onPress={toggleMeditation} style={styles.playBtn}>
-//         <Text style={styles.playText}>
-//           {isPlaying ? "Pause ⏸" : "Start ▶️"}
-//         </Text>
-//       </TouchableOpacity>
-
-//       {/* TIMER */}
-//       <Text style={styles.timerLabel}>Session Time</Text>
-//       <Text style={styles.timer}>{formatTime(timer)}</Text>
-
-//       {/* RESET BUTTON */}
-//       <Button
-//         mode="contained"
-//         buttonColor="#F8A94B"
-//         textColor="white"
-//         style={styles.resetBtn}
-//         onPress={() => {
-//           stopBreathing();
-//           setTimer(0);
-//         }}
-//       >
-//         Reset
-//       </Button>
-//     </View>
-//   );
-// }
-
-// // ---------------- STYLES ----------------------------------
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#FFF8ED",
-//     alignItems: "center",
-//     paddingTop: 60,
-//   },
-
-//   title: {
-//     fontSize: 32,
-//     fontWeight: "bold",
-//     color: "#EA8C3C",
-//   },
-//   subtitle: {
-//     fontSize: 16,
-//     color: "#A48368",
-//     marginTop: 6,
-//     marginBottom: 40,
-//   },
-
-//   // BREATHING BUBBLE
-//   breathBubble: {
-//     width: 220,
-//     height: 220,
-//     borderRadius: 150,
-//     backgroundColor: "#FFE3C2",
-//     justifyContent: "center",
-//     alignItems: "center",
-//     shadowColor: "#000",
-//     shadowOpacity: 0.1,
-//     shadowRadius: 10,
-//     marginBottom: 40,
-//   },
-//   bubbleText: {
-//     fontSize: 18,
-//     color: "#8B6242",
-//     fontWeight: "600",
-//   },
-
-//   // PLAY BUTTON
-//   playBtn: {
-//     backgroundColor: "#F8A94B",
-//     paddingVertical: 14,
-//     paddingHorizontal: 40,
-//     borderRadius: 30,
-//     marginBottom: 20,
-//   },
-//   playText: {
-//     color: "white",
-//     fontWeight: "700",
-//     fontSize: 18,
-//   },
-
-//   // TIMER
-//   timerLabel: {
-//     fontSize: 16,
-//     color: "#7D6B57",
-//     marginTop: 20,
-//   },
-//   timer: {
-//     fontSize: 36,
-//     fontWeight: "bold",
-//     color: "#6B573F",
-//     marginVertical: 10,
-//   },
-
-//   resetBtn: {
-//     marginTop: 20,
-//     borderRadius: 20,
-//   },
-// });
 import React, { useRef, useState, useEffect } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
   Animated,
-  TouchableOpacity,
+  StyleSheet,
   Easing,
+  ScrollView,
+  SafeAreaView,
 } from "react-native";
+import {
+  Appbar,
+  Text,
+  Button,
+  TouchableRipple,
+} from "react-native-paper";
 
 export default function MeditationScreen() {
   const bubbleAnim = useRef(new Animated.Value(1)).current;
   const bgAnim = useRef(new Animated.Value(0)).current;
-  const progressAnim = useRef(new Animated.Value(0)).current;
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [phase, setPhase] = useState("Tap to Start");
@@ -199,7 +29,7 @@ export default function MeditationScreen() {
 
   let intervalRef = useRef(null);
 
-  // BACKGROUND GRADIENT ANIMATION (soft Headspace effect)
+  // BACKGROUND GRADIENT ANIMATION
   useEffect(() => {
     Animated.loop(
       Animated.timing(bgAnim, {
@@ -216,24 +46,7 @@ export default function MeditationScreen() {
     outputRange: ["#FFF5E8", "#FFEBD2"],
   });
 
-  // BREATHING CYCLE
-  const startBreathing = () => {
-    setIsPlaying(true);
-    setTimer(0);
-    let index = 0;
-
-    animateBubble();
-
-    intervalRef.current = setInterval(() => {
-      setTimer((t) => t + 1);
-
-      setPhase(phases[index].label);
-
-      index = (index + 1) % phases.length;
-      animateBubble();
-    }, phases[0].duration);
-  };
-
+  // BREATHING BUBBLE LOOP
   const animateBubble = () => {
     Animated.sequence([
       Animated.timing(bubbleAnim, {
@@ -249,6 +62,22 @@ export default function MeditationScreen() {
     ]).start();
   };
 
+  const startBreathing = () => {
+    setIsPlaying(true);
+    setTimer(0);
+    let index = 0;
+
+    animateBubble();
+
+    intervalRef.current = setInterval(() => {
+      setTimer((t) => t + 1);
+      setPhase(phases[index].label);
+
+      index = (index + 1) % phases.length;
+      animateBubble();
+    }, phases[0].duration);
+  };
+
   const stopBreathing = () => {
     setIsPlaying(false);
     clearInterval(intervalRef.current);
@@ -256,72 +85,96 @@ export default function MeditationScreen() {
     setPhase("Tap to Start");
   };
 
-  // CIRCLE PROGRESS (Headspace style)
-  const progressCircle = bubbleAnim.interpolate({
+  const toggleMeditation = () => {
+    isPlaying ? stopBreathing() : startBreathing();
+  };
+
+  const progressColor = bubbleAnim.interpolate({
     inputRange: [0.9, 1.15],
     outputRange: ["#F8A94B", "#F6BF73"],
   });
 
-  const toggleMeditation = () => {
-    if (isPlaying) stopBreathing();
-    else startBreathing();
-  };
-
   return (
-    <Animated.View style={[styles.container, { backgroundColor: bgColor }]}>
-      <Text style={styles.title}>Meditation 🧘‍♂️</Text>
-      <Text style={styles.subtitle}>Relax & follow the guide</Text>
+    <>
+      {/* FIXED APP BAR */}
+      <Appbar.Header>
+        <Appbar.Content title="Meditation" subtitle="Relax your mind ✨" />
+      </Appbar.Header>
 
-      {/* PROGRESS RING */}
-      <Animated.View
-        style={[
-          styles.progressRing,
-          { borderColor: progressCircle },
-        ]}
-      >
-        {/* BREATHING BUBBLE */}
+      {/* SAFE AREA + SCROLLABLE CONTENT */}
+      <SafeAreaView style={{ flex: 1 }}>
         <Animated.View
-          style={[
-            styles.bubble,
-            { transform: [{ scale: bubbleAnim }] },
-          ]}
+          style={[styles.container, { backgroundColor: bgColor }]}
         >
-          <Text style={styles.bubbleText}>{phase}</Text>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+          >
+
+            {/* TITLE */}
+            <Text style={styles.title}>Meditation 🧘‍♂️</Text>
+            <Text style={styles.subtitle}>Relax & follow the guide</Text>
+
+            {/* PROGRESS RING */}
+            <Animated.View
+              style={[styles.progressRing, { borderColor: progressColor }]}
+            >
+              <Animated.View
+                style={[
+                  styles.bubble,
+                  { transform: [{ scale: bubbleAnim }] },
+                ]}
+              >
+                <Text style={styles.bubbleText}>{phase}</Text>
+              </Animated.View>
+            </Animated.View>
+
+            {/* START / PAUSE */}
+            <TouchableRipple
+              style={styles.playBtn}
+              onPress={toggleMeditation}
+              rippleColor="rgba(0,0,0,0.2)"
+            >
+              <Text style={styles.playText}>
+                {isPlaying ? "Pause ⏸" : "Start ▶️"}
+              </Text>
+            </TouchableRipple>
+
+            {/* TIMER */}
+            <Text style={styles.timerLabel}>Time</Text>
+            <Text style={styles.timer}>{timer}s</Text>
+
+            {/* RESET BUTTON */}
+            <Button
+              mode="contained"
+              textColor="#A17550"
+              buttonColor="#FCE9D6"
+              style={styles.resetBtn}
+              onPress={() => {
+                stopBreathing();
+                setTimer(0);
+              }}
+            >
+              Reset
+            </Button>
+          </ScrollView>
         </Animated.View>
-      </Animated.View>
-
-      {/* START / PAUSE BUTTON */}
-      <TouchableOpacity onPress={toggleMeditation} style={styles.playBtn}>
-        <Text style={styles.playText}>
-          {isPlaying ? "Pause ⏸" : "Start ▶️"}
-        </Text>
-      </TouchableOpacity>
-
-      {/* TIMER */}
-      <Text style={styles.timerLabel}>Time</Text>
-      <Text style={styles.timer}>{timer}s</Text>
-
-      {/* RESET */}
-      <TouchableOpacity
-        onPress={() => {
-          stopBreathing();
-          setTimer(0);
-        }}
-        style={styles.resetBtn}
-      >
-        <Text style={styles.resetText}>Reset</Text>
-      </TouchableOpacity>
-    </Animated.View>
+      </SafeAreaView>
+    </>
   );
 }
 
-// ------------------- STYLES ------------------------
+// ------------------ STYLES ------------------
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  scrollContent: {
+    paddingTop: 30,
+    paddingBottom: 50,
     alignItems: "center",
-    paddingTop: 70,
   },
 
   title: {
@@ -332,7 +185,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     color: "#9C846B",
-    marginBottom: 40,
+    marginBottom: 30,
   },
 
   progressRing: {
@@ -343,7 +196,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 30,
-    borderColor: "#F6BF73",
   },
 
   bubble: {
@@ -353,9 +205,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFE2C4",
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
   },
 
   bubbleText: {
@@ -380,7 +229,6 @@ const styles = StyleSheet.create({
   timerLabel: {
     color: "#7D6B57",
     fontSize: 16,
-    marginTop: 10,
   },
   timer: {
     fontSize: 38,
@@ -390,14 +238,8 @@ const styles = StyleSheet.create({
   },
 
   resetBtn: {
-    backgroundColor: "#FCE9D6",
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderRadius: 25,
     marginTop: 10,
-  },
-  resetText: {
-    color: "#A17550",
-    fontWeight: "700",
+    borderRadius: 25,
+    paddingHorizontal: 20,
   },
 });

@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, ScrollView, View } from "react-native";
+import {
+  Appbar,
+  Card,
+  Text,
+  TouchableRipple,
+  Surface,
+} from "react-native-paper";
 
 export default function ResourcesScreen() {
   const resources = [
@@ -43,38 +50,66 @@ export default function ResourcesScreen() {
   ];
 
   return (
-    <ScrollView style={styles.container}>
-      {/* HEADER */}
-      <Text style={styles.header}>Wellness Resources 🌱</Text>
-      <Text style={styles.subheader}>Learn, grow & take mindful steps daily.</Text>
+    <>
+      {/* APP BAR */}
+      <Appbar.Header>
+        <Appbar.Content title="Resources" subtitle="Grow mindfully 🌱" />
+      </Appbar.Header>
 
-      {/* CATEGORY BUBBLES */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {categories.map((cat, idx) => (
-          <View key={idx} style={[styles.categoryBubble, { backgroundColor: cat.color }]}>
-            <Text style={styles.catEmoji}>{cat.emoji}</Text>
-            <Text style={styles.catText}>{cat.title}</Text>
-          </View>
+      <ScrollView style={styles.container}>
+
+        {/* HEADER */}
+        <Text style={styles.header}>Wellness Resources 🌱</Text>
+        <Text style={styles.subheader}>
+          Learn, grow & take mindful steps daily.
+        </Text>
+
+        {/* CATEGORY BUBBLES */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {categories.map((cat, idx) => (
+            <Surface
+              key={idx}
+              style={[
+                styles.categoryBubble,
+                { backgroundColor: cat.color },
+              ]}
+              elevation={3}
+            >
+              <Text style={styles.catEmoji}>{cat.emoji}</Text>
+              <Text style={styles.catText}>{cat.title}</Text>
+            </Surface>
+          ))}
+        </ScrollView>
+
+        {/* RESOURCE CARDS */}
+        {resources.map((res, index) => (
+          <TouchableRipple
+            key={index}
+            rippleColor="rgba(0,0,0,0.1)"
+            style={{ borderRadius: 25, marginBottom: 20 }}
+          >
+            <Card
+              style={[styles.card, { backgroundColor: res.color }]}
+              mode="contained"
+            >
+              <Card.Content>
+                <Text style={styles.cardEmoji}>{res.emoji}</Text>
+                <Text style={styles.cardTitle}>{res.title}</Text>
+                <Text style={styles.cardDesc}>{res.desc}</Text>
+
+                <View style={styles.readMoreBtn}>
+                  <Text style={styles.readMoreText}>Read More →</Text>
+                </View>
+              </Card.Content>
+            </Card>
+          </TouchableRipple>
         ))}
       </ScrollView>
-
-      {/* RESOURCE CARDS */}
-      {resources.map((res, index) => (
-        <TouchableOpacity key={index} style={[styles.card, { backgroundColor: res.color }]}>
-          <Text style={styles.cardEmoji}>{res.emoji}</Text>
-          <Text style={styles.cardTitle}>{res.title}</Text>
-          <Text style={styles.cardDesc}>{res.desc}</Text>
-
-          <View style={styles.readMoreBtn}>
-            <Text style={styles.readMoreText}>Read More →</Text>
-          </View>
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+    </>
   );
 }
 
-// ------------------- STYLES ---------------------
+// ------------------- STYLES ---------------------------
 
 const styles = StyleSheet.create({
   container: {
@@ -102,12 +137,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.07,
-    shadowRadius: 5,
   },
   catEmoji: {
-    fontSize: 24,
+    fontSize: 22,
   },
   catText: {
     fontSize: 14,
@@ -119,10 +151,6 @@ const styles = StyleSheet.create({
   card: {
     padding: 22,
     borderRadius: 25,
-    marginBottom: 20,
-    shadowColor: "#000",
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
   },
   cardEmoji: {
     fontSize: 30,
@@ -142,7 +170,8 @@ const styles = StyleSheet.create({
   readMoreBtn: {
     marginTop: 10,
     backgroundColor: "rgba(0,0,0,0.05)",
-    padding: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
     borderRadius: 15,
     alignSelf: "flex-start",
   },

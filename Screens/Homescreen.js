@@ -1,173 +1,11 @@
-// import React, { useEffect, useState } from "react";
-// import { View, Text, StyleSheet, ScrollView } from "react-native";
-// import { Card, Button } from "react-native-paper";
-
-// export default function HomeScreen({ navigation }) {
-//   const [showWelcome, setShowWelcome] = useState(true);
-
-//   useEffect(() => {
-//     const timer = setTimeout(() => setShowWelcome(false), 3000);
-//     return () => clearTimeout(timer);
-//   }, []);
-
-//   // -------------------- WELCOME SCREEN --------------------
-//   if (showWelcome) {
-//     return (
-//       <View style={styles.welcomeContainer}>
-//         <Text style={styles.welcomeTitle}>MindWell ✨</Text>
-//         <Text style={styles.welcomeSubtitle}>
-//           Breathe. Relax. Find your calm.
-//         </Text>
-//       </View>
-//     );
-//   }
-
-//   // -------------------- MAIN UI --------------------
-//   return (
-//     <ScrollView contentContainerStyle={styles.container}>
-//       {/* Header */}
-//       <Card style={styles.headerCard}>
-//         <Card.Content>
-//           <Text style={styles.mainTitle}>Welcome Back 🌿</Text>
-//           <Text style={styles.mainSubtitle}>
-//             Choose your mindfulness activity today.
-//           </Text>
-//         </Card.Content>
-//       </Card>
-
-//       {/* Journal */}
-//       <Card style={styles.featureCard}>
-//         <Card.Title title="Daily Journal ✏️" titleStyle={styles.cardTitle} />
-//         <Card.Content>
-//           <Text style={styles.descText}>
-//             Reflect and write your thoughts with clarity.
-//           </Text>
-//         </Card.Content>
-//         <Card.Actions>
-//           <Button
-//             mode="contained"
-//             buttonColor="#7A8E54"
-//             textColor="white"
-//             onPress={() => navigation.navigate("Journal")}
-//           >
-//             Open Journal
-//           </Button>
-//         </Card.Actions>
-//       </Card>
-
-//       {/* Meditation */}
-//       <Card style={styles.featureCard}>
-//         <Card.Title title="Meditation 🧘‍♀️" titleStyle={styles.cardTitle} />
-//         <Card.Content>
-//           <Text style={styles.descText}>
-//             Find peace through guided meditation.
-//           </Text>
-//         </Card.Content>
-//         <Card.Actions>
-//           <Button
-//             mode="contained"
-//             buttonColor="#7A8E54"
-//             textColor="white"
-//             onPress={() => navigation.navigate("Meditation")}
-//           >
-//             Start Session
-//           </Button>
-//         </Card.Actions>
-//       </Card>
-
-//       {/* Resources */}
-//       <Card style={styles.featureCard}>
-//         <Card.Title title="Wellness Resources 📚" titleStyle={styles.cardTitle} />
-//         <Card.Content>
-//           <Text style={styles.descText}>
-//             Learn techniques to improve your emotional well-being.
-//           </Text>
-//         </Card.Content>
-//         <Card.Actions>
-//           <Button
-//             mode="contained"
-//             buttonColor="#7A8E54"
-//             textColor="white"
-//             onPress={() => navigation.navigate("Resources")}
-//           >
-//             Explore
-//           </Button>
-//         </Card.Actions>
-//       </Card>
-//     </ScrollView>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   // 🌿 Welcome Screen
-//   welcomeContainer: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     backgroundColor: "#FAF8F1",
-//   },
-//   welcomeTitle: {
-//     fontSize: 32,
-//     fontWeight: "bold",
-//     color: "#556B2F",
-//   },
-//   welcomeSubtitle: {
-//     marginTop: 8,
-//     fontSize: 16,
-//     color: "#7A8E54",
-//   },
-
-//   // 🌿 Main Container
-//   container: {
-//     padding: 20,
-//     backgroundColor: "#FAF8F1",
-//   },
-
-//   // 🌿 Header Card
-//   headerCard: {
-//     backgroundColor: "#E8E2D0",
-//     paddingVertical: 18,
-//     marginBottom: 20,
-//     borderRadius: 12,
-//   },
-//   mainTitle: {
-//     fontSize: 26,
-//     fontWeight: "600",
-//     color: "#5B4E3B",
-//   },
-//   mainSubtitle: {
-//     fontSize: 14,
-//     color: "#7A8E54",
-//     marginTop: 4,
-//   },
-
-//   // 🌿 Feature Cards
-//   featureCard: {
-//     backgroundColor: "#F5F5DC",
-//     padding: 12,
-//     borderRadius: 12,
-//     marginBottom: 15,
-//     elevation: 2,
-//   },
-//   cardTitle: {
-//     color: "#556B2F",
-//     fontWeight: "bold",
-//     fontSize: 18,
-//   },
-//   descText: {
-//     color: "#5B4E3B",
-//     marginBottom: 10,
-//     fontSize: 14,
-//   },
-// });
 import React, { useEffect, useState } from "react";
+import { StyleSheet, ScrollView } from "react-native";
 import {
-  View,
+  Appbar,
   Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+  Card,
+  TouchableRipple,
+} from "react-native-paper";
 
 export default function HomeScreen({ navigation }) {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -177,65 +15,98 @@ export default function HomeScreen({ navigation }) {
     return () => clearTimeout(timer);
   }, []);
 
-  // HEADSPACE STYLE SPLASH
+  // SPLASH SCREEN (Paper Text)
   if (showWelcome) {
     return (
-      <View style={styles.splash}>
-        <Text style={styles.splashTitle}>Welcome to MindWell 🌤️</Text>
-        <Text style={styles.splashSub}>Find your calm today.</Text>
-      </View>
+      <Card style={styles.splash}>
+        <Card.Content>
+          <Text style={styles.splashTitle}>Welcome to MindWell 🌤️</Text>
+          <Text style={styles.splashSub}>Find your calm today.</Text>
+        </Card.Content>
+      </Card>
     );
   }
 
   return (
-    <ScrollView style={styles.container}>
-      {/* HEADER */}
-      <View style={styles.header}>
+    <>
+      {/* TOP APPBAR */}
+      <Appbar.Header>
+        <Appbar.Content title="MindWell" subtitle="Find your calm 🌿" />
+      </Appbar.Header>
+
+      <ScrollView style={styles.container}>
+
+        {/* HEADER */}
         <Text style={styles.headerTitle}>Good to see you 🌿</Text>
         <Text style={styles.headerSub}>What would you like to explore?</Text>
-      </View>
 
-      {/* BIG BUBBLE BUTTONS (HEADSPACE STYLE) */}
-      <TouchableOpacity
-        style={[styles.bigBubble, { backgroundColor: "#FFD8B0" }]}
-        onPress={() => navigation.navigate("Meditation")}
-      >
-        <Text style={styles.bubbleEmoji}>🧘‍♀️</Text>
-        <Text style={styles.bubbleTitle}>Meditation</Text>
-        <Text style={styles.bubbleSub}>Guided sessions to relax</Text>
-      </TouchableOpacity>
+        {/* BUBBLE BUTTON – MEDIATION */}
+        <TouchableRipple
+          style={[styles.bigBubble, { backgroundColor: "#FFD8B0" }]}
+          onPress={() => navigation.navigate("Meditation")}
+          rippleColor="rgba(0, 0, 0, .1)"
+        >
+          <Card style={styles.transparentCard}>
+            <Card.Content>
+              <Text style={styles.bubbleEmoji}>🧘‍♀️</Text>
+              <Text style={styles.bubbleTitle}>Meditation</Text>
+              <Text style={styles.bubbleSub}>Guided sessions to relax</Text>
+            </Card.Content>
+          </Card>
+        </TouchableRipple>
 
-      <TouchableOpacity
-        style={[styles.bigBubble, { backgroundColor: "#FFEFCB" }]}
-        onPress={() => navigation.navigate("Journal")}
-      >
-        <Text style={styles.bubbleEmoji}>📖</Text>
-        <Text style={styles.bubbleTitle}>Journal</Text>
-        <Text style={styles.bubbleSub}>Reflect and write your thoughts</Text>
-      </TouchableOpacity>
+        {/* BUBBLE BUTTON – JOURNAL */}
+        <TouchableRipple
+          style={[styles.bigBubble, { backgroundColor: "#FFEFCB" }]}
+          onPress={() => navigation.navigate("Journal")}
+          rippleColor="rgba(0, 0, 0, .1)"
+        >
+          <Card style={styles.transparentCard}>
+            <Card.Content>
+              <Text style={styles.bubbleEmoji}>📖</Text>
+              <Text style={styles.bubbleTitle}>Journal</Text>
+              <Text style={styles.bubbleSub}>
+                Reflect and write your thoughts
+              </Text>
+            </Card.Content>
+          </Card>
+        </TouchableRipple>
 
-      <TouchableOpacity
-        style={[styles.bigBubble, { backgroundColor: "#E3F5CE" }]}
-        onPress={() => navigation.navigate("Resources")}
-      >
-        <Text style={styles.bubbleEmoji}>🌼</Text>
-        <Text style={styles.bubbleTitle}>Wellness Tips</Text>
-        <Text style={styles.bubbleSub}>Read calming content</Text>
-      </TouchableOpacity>
+        {/* BUBBLE BUTTON – RESOURCES */}
+        <TouchableRipple
+          style={[styles.bigBubble, { backgroundColor: "#E3F5CE" }]}
+          onPress={() => navigation.navigate("Resources")}
+          rippleColor="rgba(0, 0, 0, .1)"
+        >
+          <Card style={styles.transparentCard}>
+            <Card.Content>
+              <Text style={styles.bubbleEmoji}>🌼</Text>
+              <Text style={styles.bubbleTitle}>Wellness Tips</Text>
+              <Text style={styles.bubbleSub}>Read calming content</Text>
+            </Card.Content>
+          </Card>
+        </TouchableRipple>
 
-      {/* SMALL SECTION LIKE HEADSPACE */}
-      <Text style={styles.sectionTitle}>Recommended for you ✨</Text>
+        {/* SECTION TITLE */}
+        <Text style={styles.sectionTitle}>Recommended for you ✨</Text>
 
-      <View style={styles.recoCard}>
-        <Text style={styles.recoTitle}>5-min Relaxation</Text>
-        <Text style={styles.recoSub}>A quick session to refresh your mind</Text>
-      </View>
+        {/* RECOMMENDED CARDS */}
+        <Card style={styles.recoCard}>
+          <Card.Content>
+            <Text style={styles.recoTitle}>5-min Relaxation</Text>
+            <Text style={styles.recoSub}>A quick session to refresh your mind</Text>
+          </Card.Content>
+        </Card>
 
-      <View style={styles.recoCard}>
-        <Text style={styles.recoTitle}>Evening Reflection</Text>
-        <Text style={styles.recoSub}>End your day with gratitude</Text>
-      </View>
-    </ScrollView>
+        <Card style={styles.recoCard}>
+          <Card.Content>
+            <Text style={styles.recoTitle}>Evening Reflection</Text>
+            <Text style={styles.recoSub}>End your day with gratitude</Text>
+          </Card.Content>
+        </Card>
+
+      </ScrollView>
+    </>
   );
 }
 
@@ -244,29 +115,30 @@ const styles = StyleSheet.create({
   splash: {
     flex: 1,
     justifyContent: "center",
+    margin: 20,
     alignItems: "center",
     backgroundColor: "#FFF7EA",
+    borderRadius: 20,
   },
   splashTitle: {
     fontSize: 32,
     fontWeight: "bold",
     color: "#FF9F50",
+    textAlign: "center",
   },
   splashSub: {
     fontSize: 16,
     color: "#AD7740",
     marginTop: 10,
+    textAlign: "center",
   },
 
   container: {
     backgroundColor: "#FFFDF8",
     paddingHorizontal: 20,
+    paddingTop: 15,
   },
 
-  // HEADER
-  header: {
-    paddingVertical: 20,
-  },
   headerTitle: {
     fontSize: 28,
     fontWeight: "bold",
@@ -275,18 +147,20 @@ const styles = StyleSheet.create({
   headerSub: {
     fontSize: 15,
     color: "#7A8E54",
-    marginTop: 5,
+    marginBottom: 15,
   },
 
-  // BIG HEADSPACE BUBBLE BUTTONS
+  // BUBBLE BUTTONS
   bigBubble: {
     borderRadius: 30,
-    padding: 25,
+    padding: 0,
     marginBottom: 20,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 4,
+    elevation: 3,
+    overflow: "hidden",
+  },
+  transparentCard: {
+    backgroundColor: "transparent",
+    elevation: 0,
   },
   bubbleEmoji: {
     fontSize: 40,
@@ -303,23 +177,19 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 
-  // SECTION TITLE
   sectionTitle: {
     fontSize: 20,
     fontWeight: "700",
     color: "#556B2F",
     marginTop: 20,
-    marginBottom: 12,
+    marginBottom: 10,
   },
 
   recoCard: {
     backgroundColor: "#FFF2D7",
-    padding: 18,
-    borderRadius: 20,
     marginBottom: 15,
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 6,
+    borderRadius: 20,
+    elevation: 2,
   },
   recoTitle: {
     fontSize: 18,
