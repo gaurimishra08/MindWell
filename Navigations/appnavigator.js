@@ -3,11 +3,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { BottomNavigation } from "react-native-paper";
 
-import HomeScreen from "../Screens/HomeScreen";
+
 import JournalScreen from "../Screens/JournalScreen";
 import MeditationScreen from "../Screens/MeditationScreen";
 import ResourcesScreen from "../Screens/ResourcesScreen";
 import SettingsScreen from "../Screens/SettingsScreen";
+import HomeScreen from "../Screens/Homescreen";
 
 const Stack = createNativeStackNavigator();
 
