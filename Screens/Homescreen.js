@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, ScrollView } from "react-native";
-import {
-  Appbar,
-  Text,
-  Card,
-  TouchableRipple,
-} from "react-native-paper";
+import { Appbar, Text, Card, TouchableRipple } from "react-native-paper";
 
 export default function HomeScreen({ navigation }) {
   const [showWelcome, setShowWelcome] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowWelcome(false), 3000);
+    const timer = setTimeout(() => setShowWelcome(false), 2000);
     return () => clearTimeout(timer);
   }, []);
 
-  // SPLASH SCREEN (Paper Text)
   if (showWelcome) {
     return (
       <Card style={styles.splash}>
@@ -29,22 +23,19 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <>
-      {/* TOP APPBAR */}
-      <Appbar.Header>
+      <Appbar.Header mode="center-aligned">
         <Appbar.Content title="MindWell" subtitle="Find your calm 🌿" />
       </Appbar.Header>
 
       <ScrollView style={styles.container}>
-
-        {/* HEADER */}
         <Text style={styles.headerTitle}>Good to see you 🌿</Text>
         <Text style={styles.headerSub}>What would you like to explore?</Text>
 
-        {/* BUBBLE BUTTON – MEDIATION */}
+        {/* MEDITATION */}
         <TouchableRipple
+          onPress={() => navigation.navigate("MeditationPage")}
+          rippleColor="rgba(0,0,0,0.1)"
           style={[styles.bigBubble, { backgroundColor: "#FFD8B0" }]}
-          onPress={() => navigation.navigate("Meditation")}
-          rippleColor="rgba(0, 0, 0, .1)"
         >
           <Card style={styles.transparentCard}>
             <Card.Content>
@@ -55,28 +46,26 @@ export default function HomeScreen({ navigation }) {
           </Card>
         </TouchableRipple>
 
-        {/* BUBBLE BUTTON – JOURNAL */}
+        {/* JOURNAL */}
         <TouchableRipple
+          onPress={() => navigation.navigate("JournalPage")}
+          rippleColor="rgba(0,0,0,0.1)"
           style={[styles.bigBubble, { backgroundColor: "#FFEFCB" }]}
-          onPress={() => navigation.navigate("Journal")}
-          rippleColor="rgba(0, 0, 0, .1)"
         >
           <Card style={styles.transparentCard}>
             <Card.Content>
               <Text style={styles.bubbleEmoji}>📖</Text>
               <Text style={styles.bubbleTitle}>Journal</Text>
-              <Text style={styles.bubbleSub}>
-                Reflect and write your thoughts
-              </Text>
+              <Text style={styles.bubbleSub}>Reflect and write your thoughts</Text>
             </Card.Content>
           </Card>
         </TouchableRipple>
 
-        {/* BUBBLE BUTTON – RESOURCES */}
+        {/* RESOURCES */}
         <TouchableRipple
+          onPress={() => navigation.navigate("ResourcesPage")}
+          rippleColor="rgba(0,0,0,0.1)"
           style={[styles.bigBubble, { backgroundColor: "#E3F5CE" }]}
-          onPress={() => navigation.navigate("Resources")}
-          rippleColor="rgba(0, 0, 0, .1)"
         >
           <Card style={styles.transparentCard}>
             <Card.Content>
@@ -87,10 +76,8 @@ export default function HomeScreen({ navigation }) {
           </Card>
         </TouchableRipple>
 
-        {/* SECTION TITLE */}
         <Text style={styles.sectionTitle}>Recommended for you ✨</Text>
 
-        {/* RECOMMENDED CARDS */}
         <Card style={styles.recoCard}>
           <Card.Content>
             <Text style={styles.recoTitle}>5-min Relaxation</Text>
@@ -104,14 +91,12 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.recoSub}>End your day with gratitude</Text>
           </Card.Content>
         </Card>
-
       </ScrollView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  // SPLASH
   splash: {
     flex: 1,
     justifyContent: "center",
@@ -132,13 +117,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
   },
-
   container: {
     backgroundColor: "#FFFDF8",
     paddingHorizontal: 20,
     paddingTop: 15,
+    flex: 1,
   },
-
   headerTitle: {
     fontSize: 28,
     fontWeight: "bold",
@@ -149,11 +133,8 @@ const styles = StyleSheet.create({
     color: "#7A8E54",
     marginBottom: 15,
   },
-
-  // BUBBLE BUTTONS
   bigBubble: {
     borderRadius: 30,
-    padding: 0,
     marginBottom: 20,
     elevation: 3,
     overflow: "hidden",
@@ -176,7 +157,6 @@ const styles = StyleSheet.create({
     color: "#6D6D6D",
     marginTop: 4,
   },
-
   sectionTitle: {
     fontSize: 20,
     fontWeight: "700",
@@ -184,7 +164,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
   },
-
   recoCard: {
     backgroundColor: "#FFF2D7",
     marginBottom: 15,
