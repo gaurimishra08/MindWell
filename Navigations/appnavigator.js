@@ -1,8 +1,8 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { BottomNavigation } from "react-native-paper";
-
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import JournalScreen from "../Screens/JournalScreen";
 import MeditationScreen from "../Screens/MeditationScreen";
@@ -11,16 +11,17 @@ import SettingsScreen from "../Screens/SettingsScreen";
 import HomeScreen from "../Screens/Homescreen";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         
-        {/* bottom tabs */}
+        {/* Tabs */}
         <Stack.Screen name="Tabs" component={MainTabs} />
 
-        {/* screens opened from Home bubbles */}
+        {/* Screens opened from Home bubbles */}
         <Stack.Screen name="JournalPage" component={JournalScreen} />
         <Stack.Screen name="MeditationPage" component={MeditationScreen} />
         <Stack.Screen name="ResourcesPage" component={ResourcesScreen} />
@@ -30,42 +31,65 @@ export default function AppNavigator() {
   );
 }
 
-function MainTabs({ navigation }) {
-  const [index, setIndex] = React.useState(0);
-
-  const routes = [
-    { key: "home", title: "Home", icon: "home" },
-    { key: "journalTab", title: "Journal", icon: "notebook" },
-    { key: "meditationTab", title: "Meditation", icon: "flower" },
-    { key: "resourcesTab", title: "Resources", icon: "format-list-bulleted" },
-    { key: "settings", title: "Settings", icon: "cog" },
-  ];
-
-  const renderScene = ({ route }) => {
-    switch (route.key) {
-      case "home":
-        return <HomeScreen navigation={navigation} />; 
-      case "journalTab":
-        return <JournalScreen />;
-      case "meditationTab":
-        return <MeditationScreen />;
-      case "resourcesTab":
-        return <ResourcesScreen />;
-      case "settings":
-        return <SettingsScreen />;
-      default:
-        return null;
-    }
-  };
-
+function MainTabs() {
   return (
-    <BottomNavigation
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
-      activeColor="#4CAF50"
-      inactiveColor="gray"
-      barStyle={{ backgroundColor: "white" }}
-    />
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,  // you use your own Appbar in each screen
+        tabBarActiveTintColor: "#4CAF50",
+        tabBarInactiveTintColor: "gray",
+        tabBarStyle: { backgroundColor: "white" }
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Journal"
+        component={JournalScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="notebook" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Meditation"
+        component={MeditationScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="flower" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Resources"
+        component={ResourcesScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="format-list-bulleted" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="cog" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, View } from "react-native";
 import { Appbar, Text, Card, TouchableRipple } from "react-native-paper";
 
 export default function HomeScreen({ navigation }) {
@@ -12,22 +12,30 @@ export default function HomeScreen({ navigation }) {
 
   if (showWelcome) {
     return (
-      <Card style={styles.splash}>
-        <Card.Content>
-          <Text style={styles.splashTitle}>Welcome to MindWell 🌤️</Text>
-          <Text style={styles.splashSub}>Find your calm today.</Text>
-        </Card.Content>
-      </Card>
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <Card style={styles.splash}>
+          <Card.Content>
+            <Text style={styles.splashTitle}>Welcome to MindWell 🌤️</Text>
+            <Text style={styles.splashSub}>Find your calm today.</Text>
+          </Card.Content>
+        </Card>
+      </View>
     );
   }
 
   return (
-    <>
+    <View style={{ flex: 1 }}>
+      {/* Header */}
       <Appbar.Header mode="center-aligned">
         <Appbar.Content title="MindWell" subtitle="Find your calm 🌿" />
       </Appbar.Header>
 
-      <ScrollView style={styles.container}>
+      {/* Scrollable content */}
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{ paddingBottom: 50 }}
+        showsVerticalScrollIndicator={false}
+      >
         <Text style={styles.headerTitle}>Good to see you 🌿</Text>
         <Text style={styles.headerSub}>What would you like to explore?</Text>
 
@@ -92,18 +100,16 @@ export default function HomeScreen({ navigation }) {
           </Card.Content>
         </Card>
       </ScrollView>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   splash: {
-    flex: 1,
-    justifyContent: "center",
     margin: 20,
-    alignItems: "center",
     backgroundColor: "#FFF7EA",
     borderRadius: 20,
+    padding: 30,
   },
   splashTitle: {
     fontSize: 32,
@@ -117,12 +123,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
   },
+  
   container: {
     backgroundColor: "#FFFDF8",
     paddingHorizontal: 20,
     paddingTop: 15,
-    flex: 1,
   },
+
   headerTitle: {
     fontSize: 28,
     fontWeight: "bold",
@@ -133,6 +140,7 @@ const styles = StyleSheet.create({
     color: "#7A8E54",
     marginBottom: 15,
   },
+
   bigBubble: {
     borderRadius: 30,
     marginBottom: 20,
@@ -157,6 +165,7 @@ const styles = StyleSheet.create({
     color: "#6D6D6D",
     marginTop: 4,
   },
+
   sectionTitle: {
     fontSize: 20,
     fontWeight: "700",
@@ -164,6 +173,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
   },
+
   recoCard: {
     backgroundColor: "#FFF2D7",
     marginBottom: 15,
